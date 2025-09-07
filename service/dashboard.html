@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mood Tracker - Health Spa</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        background: #f4f7fb;
+        display: flex;
+        min-height: 100vh;
+      }
+      /* Sidebar */
+      .sidebar {
+        width: 240px;
+        background: #2a3f54;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 20px;
+      }
+      .sidebar ul {
+        list-style: none;
+      }
+      .sidebar ul li {
+        margin: 15px 0;
+      }
+      .sidebar ul li a {
+        text-decoration: none;
+        color: #ddd;
+        display: block;
+        padding: 10px;
+        border-radius: 8px;
+        transition: 0.3s;
+      }
+      .sidebar ul li a:hover {
+        background: #1abc9c;
+        color: #fff;
+      }
+      /* Main */
+      .main {
+        flex: 1;
+        padding: 20px;
+      }
+      header {
+        margin-bottom: 20px;
+      }
+      header h1 {
+        font-size: 22px;
+        color: #333;
+      }
+      .card {
+        background: #fff;
+        padding: 30px;
+        width: 420px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .mood-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: conic-gradient(#1abc9c 70%, #eee 30%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto;
+        font-weight: bold;
+        font-size: 20px;
+        color: #333;
+      }
+      .mood-buttons button {
+        font-size: 22px;
+        margin: 5px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #eee;
+        transition: 0.3s;
+      }
+      .mood-buttons button:hover {
+        background: #1abc9c;
+        color: #fff;
+      }
+      /* Chart styling */
+      #moodChart {
+        max-width: 400px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+      /* Chatbot */
+      .chatbot {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 300px;
+        height: 400px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .chat-header {
+        background: #1abc9c;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+      }
+      .chat-body {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        font-size: 14px;
+      }
+      .chat-input {
+        display: flex;
+        border-top: 1px solid #ddd;
+      }
+      .chat-input input {
+        flex: 1;
+        border: none;
+        padding: 10px;
+        outline: none;
+      }
+      .chat-input button {
+        background: #1abc9c;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div>
+        <h2>Health Spa</h2>
+        <ul>
+          <li><a href="#">Mood Tracker</a></li>
+          <li><a href="#">Mood Tracking</a></li>
+          <li><a href="#">Journal</a></li>
+          <li><a href="#">Progress</a></li>
+          <li><a href="#">Resources</a></li>
+          <li><a href="#">Therapy</a></li>
+        </ul>
+      </div>
+      <div><a href="login.html" class="btn">Logout</a></div>
+    </div>
+
+    <!-- Main -->
+    <!-- Main -->
+    <div class="main">
+      <header><h1>Welcome, User 👋</h1></header>
+
+      <div class="card">
+        <h3>Mood Tracking</h3>
+
+        <!-- Pie Chart -->
+        <canvas id="moodChart"></canvas>
+
+        <h2>Choose Your Mood</h2>
+        <div class="mood-buttons">
+          <button onclick="addMood('Happy')">😊</button>
+          <button onclick="addMood('Sad')">😢</button>
+          <button onclick="addMood('Angry')">😡</button>
+          <button onclick="addMood('Loved')">😍</button>
+          <button onclick="addMood('Calm')">😌</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot">
+      <div class="chat-header">AI Assistant 🤖</div>
+      <div class="chat-body" id="chatBody"></div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type a message..." />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+
+    <script>
+      // Mood data storage
+      const moodData = {
+        Happy: 0,
+        Sad: 0,
+        Angry: 0,
+        Loved: 0,
+        Calm: 0,
+      };
+
+      // Chart.js setup
+      const ctx = document.getElementById("moodChart").getContext("2d");
+      const moodChart = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: Object.keys(moodData),
+          datasets: [
+            {
+              label: "Mood Count",
+              data: Object.values(moodData),
+              backgroundColor: [
+                "#f39c12", // Happy
+                "#3498db", // Sad
+                "#e74c3c", // Angry
+                "#9b59b6", // Loved
+                "#1abc9c", // Calm
+              ],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: "bottom" },
+          },
+        },
+      });
+
+      // Add mood function
+      function addMood(mood) {
+        if (moodData[mood] !== undefined) {
+          moodData[mood]++;
+          moodChart.data.datasets[0].data = Object.values(moodData);
+          moodChart.update();
+        }
+      }
+
+      // Chatbot
+      function sendMessage() {
+        const input = document.getElementById("chatInput");
+        const message = input.value.trim();
+        if (message === "") return;
+
+        const chatBody = document.getElementById("chatBody");
+        chatBody.innerHTML += `<p><b>You:</b> ${message}</p>`;
+        input.value = "";
+
+        let reply = "I'm here for you. 🌱";
+        if (message.toLowerCase().includes("stress"))
+          reply = "Try deep breathing for 5 minutes.";
+        else if (message.toLowerCase().includes("sad"))
+          reply = "It’s okay to feel sad. Listening to calming music may help.";
+        else if (message.toLowerCase().includes("happy"))
+          reply = "That’s awesome! Keep spreading positivity. 🌟";
+
+        setTimeout(() => {
+          chatBody.innerHTML += `<p><b>Bot:</b> ${reply}</p>`;
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }, 600);
+      }
+    </script>
+  </body>
+</html>

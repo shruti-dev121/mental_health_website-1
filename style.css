@@ -1,0 +1,172 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+body {
+  background: #5c5c5c; /* grey background */
+  color: #fff;
+}
+
+/* Navbar */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: #444;
+}
+
+header .logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(182, 168, 168);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  color: #fff;
+}
+
+nav ul li a {
+ text-decoration: none;   /* removes underline */
+  color: #a46262;          /* your custom color */
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+
+nav ul li a:hover {
+  color: #1abc9c;          /* hover color */
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 60px;
+  min-height: 90vh;
+}
+
+.hero-left,
+.hero-right {
+  flex: 1;
+  text-align: center;
+}
+
+.hero-left img,
+.hero-right img {
+  width: 80%;
+  max-width: 300px;
+}
+
+.hero-center {
+  flex: 2;
+  text-align: center;
+  padding: 20px;
+}
+
+.hero-center h1 {
+  font-size: 70px;
+  font-weight: 800;
+  color: #ffeb3b;
+  line-height: 1.1;
+}
+
+.hero-center h2 {
+  font-size: 28px;
+  margin: 15px 0;
+  color: white;
+}
+
+.hero-center p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #eee;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  padding: 12px 24px;
+  background: #4db6ac;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background: #009688;
+}
+
+.link {
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+}
+
+.link:hover {
+  color: #ffeb3b;
+}
+
+/* =====================
+   Footer
+===================== */
+.footer {
+  background: #222;
+  color: #fff;
+  padding: 40px 20px 20px;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-section {
+  flex: 1 1 200px;
+  margin: 20px;
+}
+
+.footer-section h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  border-bottom: 2px solid #f39c12;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.footer-section p,
+.footer-section a {
+  font-size: 14px;
+  color: #bbb;
+  text-decoration: none;
+  line-height: 1.8;
+}
+
+.footer-section a:hover {
+  color: #f39c12;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 15px;
+  border-top: 1px solid #444;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #aaa;
+}

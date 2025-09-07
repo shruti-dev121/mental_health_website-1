@@ -1,0 +1,118 @@
+/* Login Page Styles */
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #5c5c5c;
+}
+
+.login-container {
+  background: #444;
+  padding: 40px;
+  border-radius: 12px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.login-container h2 {
+  color: #ffeb3b;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #eee;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+}
+
+.signup-text {
+  margin-top: 15px;
+  color: #eee;
+}
+
+.signup-text a {
+  color: #ffeb3b;
+  text-decoration: none;
+}
+.tech-showcase {
+  padding: 50px 5%;
+  background: #fff;
+}
+
+.showcase-container {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.showcase-photos {
+  flex: 1;
+  display: grid;
+  grid-template-areas: 
+    "tall wide"
+    "tall small1"
+    "tall small2";
+  grid-gap: 15px;
+}
+
+.showcase-photos .photo {
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+}
+
+.showcase-photos img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.showcase-photos .photo:hover img {
+  transform: scale(1.1);
+}
+
+/* Layout positions */
+.photo.tall { grid-area: tall; height: 400px; }
+.photo.wide { grid-area: wide; height: 200px; }
+.photo.small:nth-child(3) { grid-area: small1; height: 190px; }
+.photo.small:nth-child(4) { grid-area: small2; height: 190px; }
+
+.showcase-video {
+  flex: 1;
+  text-align: left;
+}
+
+.showcase-video h2 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.showcase-video p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.showcase-video video {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
